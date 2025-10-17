@@ -1,9 +1,10 @@
+import BlogForm from '@/components/modules/blog/BlogForm';
 import React from 'react';
 
 const createBlogPage = () => {
     return (
         <div>
-            <h1>this is BLog page</h1>
+          <BlogForm/>
         </div>
     );
 };

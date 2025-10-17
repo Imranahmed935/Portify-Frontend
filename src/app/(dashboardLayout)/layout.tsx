@@ -5,7 +5,7 @@ import React from "react";
 const layout = ({ children }: { children: React.ReactNode }) => {
   return <div className="flex gap-4">
     <SideBar/>
-    {children}
+    <main className="flex-1">{children}</main>
     </div>;
 };
 
