@@ -15,15 +15,26 @@ import {
 } from "@/components/ui/form";
 
 const BlogForm = () => {
-  // ✅ Initialize the form
+
   const form = useForm<FieldValues>({
     defaultValues: {
       title: "",
       content: "",
       thumbnail: "",
-      authorId: "",
     },
   });
+
+  const onSubmit = async(values:FieldValues)=>{
+   const res = await fetch(`http://localhost:5000/api/v1/blog/create`,{
+    method:"POST",
+    headers:{
+      "Content-Type":"application/json"
+    },
+    body:JSON.stringify(values)
+   })
+   alert("blog created successful")
+   console.log(res)
+  }
 
   return (
   <div className="min-h-screen flex items-center justify-center bg-zinc-950 text-white px-0 py-12">
@@ -31,7 +42,7 @@ const BlogForm = () => {
     <h2 className="text-4xl font-semibold text-left">Create Blog</h2>
 
     <Form {...form}>
-      <form className="space-y-6 w-full">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 w-full">
         {/* Title */}
         <FormField
           control={form.control}
@@ -80,26 +91,6 @@ const BlogForm = () => {
               <FormControl>
                 <Input
                   placeholder="Enter image URL"
-                  className="w-full border-[#dbdbdb] bg-transparent text-white"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        {/* Author ID */}
-        <FormField
-          control={form.control}
-          name="authorId"
-          render={({ field }) => (
-            <FormItem className="w-full">
-              <FormLabel>Author ID</FormLabel>
-              <FormControl>
-                <Input
-                  type="number"
-                  placeholder="Enter author ID"
                   className="w-full border-[#dbdbdb] bg-transparent text-white"
                   {...field}
                 />

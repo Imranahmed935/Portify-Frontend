@@ -5,7 +5,7 @@ import { Home, FolderPlus, FilePlus, LogOut } from "lucide-react";
 
 const SideBar = () => {
   return (
-    <div className=" border-r border-r-gray-400 text-white w-56 h-screen p-6 flex flex-col justify-between">
+    <div className="fixed top-0 bottom-0 border-r border-r-gray-400 text-white w-56 h-screen p-6  flex flex-col justify-between">
   
       <div>
       

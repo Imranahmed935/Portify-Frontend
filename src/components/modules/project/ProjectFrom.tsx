@@ -15,15 +15,18 @@ import {
 } from "@/components/ui/form";
 
 const ProjectForm = () => {
-  // ✅ Initialize the form
+  
   const form = useForm<FieldValues>({
     defaultValues: {
       title: "",
       content: "",
       thumbnail: "",
-      authorId: "",
     },
   });
+
+  const onSubmit = async (values:FieldValues)=>{
+    console.log(values)
+  }
 
   return (
   <div className="min-h-screen flex items-center justify-center bg-zinc-950 text-white px-0 py-12">
@@ -31,7 +34,7 @@ const ProjectForm = () => {
     <h2 className="text-4xl font-semibold text-left">Create Project</h2>
 
     <Form {...form}>
-      <form className="space-y-6 w-full">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 w-full">
         {/* Title */}
         <FormField
           control={form.control}
@@ -88,27 +91,7 @@ const ProjectForm = () => {
             </FormItem>
           )}
         />
-
-        {/* Author ID */}
-        <FormField
-          control={form.control}
-          name="authorId"
-          render={({ field }) => (
-            <FormItem className="w-full">
-              <FormLabel>Author ID</FormLabel>
-              <FormControl>
-                <Input
-                  type="number"
-                  placeholder="Enter author ID"
-                  className="w-full border-[#dbdbdb] bg-transparent text-white"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
+        
         {/* Submit */}
         <Button type="submit" className="w-full mt-4">
           Publish Blog
