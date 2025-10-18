@@ -2,16 +2,19 @@
 import React from "react";
 import Link from "next/link";
 import { Home, FolderPlus, FilePlus, LogOut } from "lucide-react";
+import { signOut, useSession } from "next-auth/react";
+import { Button } from "@/components/ui/button";
 
 const SideBar = () => {
+  const session = useSession();
+  console.log(session);
   return (
     <div className="fixed top-0 bottom-0 border-r border-r-gray-400 text-white w-56 h-screen p-6  flex flex-col justify-between">
-  
       <div>
-      
-        <h2 className="lg:text-4xl text-2xl font-bold mb-6 text-blue-500 text-center">Portify</h2>
+        <h2 className="lg:text-4xl text-2xl font-bold mb-6 text-blue-500 text-center">
+          Portify
+        </h2>
 
-       
         <nav className="flex flex-col space-y-4">
           <Link
             href="/"
@@ -40,10 +43,20 @@ const SideBar = () => {
       </div>
 
       {/* Bottom Logout Button */}
-      <button className="flex items-center space-x-3 bg-red-600 p-2 rounded-md transition mt-6">
-        <LogOut size={20} />
-        <span>Logout</span>
-      </button>
+      <div className="p-4 border-t border-gray-500">
+        {
+          session.status === "authenticated" && <Button
+          variant="destructive"
+          className="w-full justify-start gap-2 cursor-pointer"
+          onClick={() => {
+            signOut()
+          }}
+        >
+          <LogOut className="h-4 w-4" />
+          Logout
+        </Button>
+        }
+      </div>
     </div>
   );
 };
