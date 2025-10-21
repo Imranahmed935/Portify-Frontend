@@ -27,6 +27,7 @@ const BlogForm = () => {
   });
 
  const onSubmit = async (values: FieldValues) => {
+  
   if (status !== "authenticated") {
     alert("You must be logged in to create a blog");
     return;
