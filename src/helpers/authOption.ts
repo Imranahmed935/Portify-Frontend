@@ -19,10 +19,12 @@ export const authOptions: NextAuthOptions = {
           const res = await fetch("http://localhost:5000/api/v1/auth/login", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
+            credentials: "include",
             body: JSON.stringify({
               email: credentials.email,
               password: credentials.password,
             }),
+            
           });
 
           if (!res.ok) {
@@ -30,15 +32,18 @@ export const authOptions: NextAuthOptions = {
             return null;
           }
 
-          const user = await res.json();
-          console.log("✅ User response:", user);
+          const userData = await res.json();
+          const user = userData?.data;
 
-          const userData = user?.data;
-          
-          if (userData?.id || userData?.id) {
+          console.log("✅ Authorized user:", user);
+
+          if (user?.id && user?.email) {
             return {
-              id: userData.id || userData.id,
-              email: userData.email,
+              id: user.id,
+              email: user.email,
+              role: user.role,
+              accessToken: user.accessToken, // ✅ Correct
+              refreshToken: user.refreshTokenToken, // ✅ Added
             };
           }
 
@@ -52,12 +57,27 @@ export const authOptions: NextAuthOptions = {
   ],
 
   callbacks: {
+    // 🧠 Save tokens in JWT
     async jwt({ token, user }) {
-      if (user) token.id = user.id;
+      if (user) {
+        token.id = user.id;
+        token.email = user.email;
+        token.role = user.role;
+        token.accessToken = user.accessToken;
+        token.refreshToken = user.refreshToken;
+      }
       return token;
     },
-    async session({ token, session }) {
-      if (session.user) session.user.id  = token.id;
+
+    // 🧠 Expose tokens to frontend session
+    async session({ session, token }) {
+      if (session.user) {
+        session.user.id = token.id as number;
+        session.user.email = token.email as string;
+        session.user.role = token.role as string;
+        session.user.accessToken = token.accessToken as string;
+        session.user.refreshToken = token.refreshToken as string;
+      }
       return session;
     },
   },
