@@ -6,6 +6,8 @@ import { Plus, X } from "lucide-react";
 import ProjectForm from "@/components/modules/project/ProjectFrom";
 import { Button } from "@/components/ui/button";
 
+
+
 const CreateProjectPage = () => {
   const [showForm, setShowForm] = useState(false);
 
@@ -31,6 +33,11 @@ const CreateProjectPage = () => {
           </button>
         </div>
       )}
+
+
+      <div>
+        {/* <AllProject/> */}
+      </div>
     </div>
   );
 };
