@@ -13,12 +13,15 @@ import { Button } from "@/components/ui/button";
 import { Trash, Edit } from "lucide-react";
 import { formatDate, handleDelete, truncateContent } from "@/utils/miniFuntion";
 import { useSession } from "next-auth/react";
+import ProjectModal from "./ProjectModal";
 
 const AllProject = () => {
-  const session = useSession()
+  const session = useSession();
   const token = session.data?.user.accessToken;
   const [projects, setProjects] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [selectedProject, setSelectedProject] = useState<any>(null);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const fetchProjects = async () => {
@@ -32,10 +35,8 @@ const AllProject = () => {
         setLoading(false);
       }
     };
-
     fetchProjects();
   }, []);
-
 
   if (loading) return <p>Loading projects...</p>;
   if (projects.length === 0) return <p>No projects found 😢</p>;
@@ -87,17 +88,22 @@ const AllProject = () => {
                 <TableCell className="px-4 py-2">
                   <div className="flex justify-end gap-2 h-full">
                     <Button
+                      onClick={() => {
+                        setSelectedProject(project);
+                        setOpen(true);
+                      }}
                       variant="outline"
                       size="sm"
                       className="text-white border-gray-600 hover:bg-zinc-700"
                     >
                       <Edit className="w-4 h-4 mr-1" />
                     </Button>
+
                     <Button
                       variant="destructive"
                       size="sm"
                       className="hover:bg-red-700"
-                      onClick={()=>handleDelete(project.id, token!)}
+                      onClick={() => handleDelete(project.id, token!)}
                     >
                       <Trash className="w-4 h-4 mr-1" />
                     </Button>
@@ -108,6 +114,13 @@ const AllProject = () => {
           </TableBody>
         </Table>
       </div>
+
+      {/* ✅ Modal Render */}
+      <ProjectModal
+        open={open}
+        setOpen={setOpen}
+        project={selectedProject}
+      />
     </div>
   );
 };

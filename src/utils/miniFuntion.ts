@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 
 export const truncateContent = (text: string) => {
@@ -40,3 +41,28 @@ export const handleDelete = async (id: number, token: string) => {
     return { success: false, message: "Something went wrong" };
   }
 };
+
+
+export const handleUpdate = async (id: number, token: string, data: any) => {
+  try {
+    const res = await fetch(`http://localhost:5000/api/v1/project/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!res.ok) {
+      throw new Error(`Failed to update project: ${res.status}`);
+    }
+
+    const result = await res.json();
+    console.log("✅ Project updated successfully:", result);
+    return result;
+  } catch (error) {
+    console.error("❌ Error updating project:", error);
+  }
+};
+
