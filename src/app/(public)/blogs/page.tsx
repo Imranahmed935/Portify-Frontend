@@ -1,5 +1,12 @@
 import BlogCard from "@/components/modules/blog/BlogCard";
 
+interface Blog {
+  id?: number;
+  title?: string;
+  content?: string;
+  authorId?: number;
+  thumbnail?: string;
+}
 
 const BlogPage = async () => {
     const res = await fetch("http://localhost:5000/api/v1/blog", {
@@ -22,7 +29,7 @@ const BlogPage = async () => {
             <h1>this is blog page</h1>
             <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-4">
                 {blogs.length > 0 ? (
-          blogs.map((blog) => (
+          blogs.map((blog:Blog) => (
             <BlogCard key={blog.id} blog={blog} />
           ))
         ) : (
