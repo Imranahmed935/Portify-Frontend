@@ -5,7 +5,17 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Github, ExternalLink, ArrowBigRight } from "lucide-react";
 import Link from "next/link";
 
-const ProjectCard = ({ project }) => {
+interface Project {
+  id?: number;
+  title?: string;
+  content?: string;
+  thumbnail?: string;
+  githubLink?: string;
+  liveLink?: string;
+  tags:string[]
+}
+
+const ProjectCard = ({ project }:{project:Project}) => {
   const { id, title, content, thumbnail, githubLink, liveLink, tags } = project || {};
 
   return (
@@ -33,7 +43,7 @@ const ProjectCard = ({ project }) => {
 
           {/* Tags */}
           <div className="flex flex-wrap gap-2">
-            {tags?.map((tag, i) => (
+            {tags?.map((tag:string, i:number) => (
               <span
                 key={i}
                 className="bg-zinc-800 text-zinc-300 text-xs px-3 py-1 rounded-full"

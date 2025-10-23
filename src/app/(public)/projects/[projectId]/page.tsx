@@ -1,8 +1,9 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Github, ExternalLink, ArrowLeft } from "lucide-react";
+import { Github, ExternalLink, } from "lucide-react";
 import Link from "next/link";
+
 
 const ProjectDetailsPage = async ({
   params,
