@@ -3,9 +3,11 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { NavMenu } from "./Nav-menu";
 import { NavigationSheet } from "./Navigation-sheet";
+import { signOut, useSession } from "next-auth/react";
 
 
 const Navbar = () => {
+  const session = useSession()
   
   return (
     <nav className="fixed top-6 inset-x-4 h-16 max-w-screen-xl mx-auto z-30">
@@ -19,11 +21,25 @@ const Navbar = () => {
 
 
         <div className="flex items-center gap-4 md:gap-6">
-          <Button className="rounded-full px-5 py-2 text-sm md:text-base">
+
+        
+         {
+          session.status === "authenticated"?<Button
+          variant="destructive"
+          className="w-full justify-start gap-2 cursor-pointer"
+          onClick={() => {
+            signOut()
+          }}
+        >
+          Logout
+        </Button>:<Button className="rounded-full px-5 py-2 text-sm md:text-base">
             <Link href="/login" className="block w-full text-center">
               Login
             </Link>
           </Button>
+         }
+        
+          
           
 
           <div className="md:hidden">

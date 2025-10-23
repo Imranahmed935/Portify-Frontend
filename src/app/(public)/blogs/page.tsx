@@ -10,7 +10,7 @@ interface Blog {
 
 const BlogPage = async () => {
     const res = await fetch("http://localhost:5000/api/v1/blog", {
-    cache: "no-store", // always fetch fresh data on SSR
+    next:{revalidate:30}
   });
 
   if (!res.ok) {
