@@ -28,7 +28,10 @@ const ProjectPage = async () => {
   const projects: Project[] = data?.data || data || [];
 
   return (
-    <div className="py-30 px-4 max-w-7xl mx-auto">
+    <div className="py-30 px-4 max-w-7xl mx-auto space-y-6">
+      <h1 className="font-bold text-2xl">
+        Explore my latest Projects
+      </h1>
       <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-4">
         {projects.map((project) => (
           <ProjectCard key={project.id} project={project} />

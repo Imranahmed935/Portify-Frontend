@@ -1,4 +1,7 @@
+import BlogSection from "@/components/modules/home/BlogSection";
+import ContactSection from "@/components/modules/home/ContactSection";
 import { HeroSection } from "@/components/modules/home/HeroSection";
+import ProjectSection from "@/components/modules/home/ProjectSection";
 import Skills from "@/components/modules/home/Skills";
 
 export default function Home() {
@@ -22,6 +25,9 @@ export default function Home() {
         imageAlt="Full Stack Developer Illustration"
       />
       <Skills/>
+      <ProjectSection/>
+      <BlogSection/>
+      <ContactSection/>
     </div>
   );
 }

@@ -25,8 +25,8 @@ const BlogPage = async () => {
    const blogs = data?.data || data || [];
    console.log(blogs)
     return (
-        <div className="py-30 px-4 max-w-7xl mx-auto">
-            <h1>this is blog page</h1>
+        <div className="py-30 px-4 max-w-7xl mx-auto space-y-6">
+           <h1 className="font-bold text-2xl">Latest Articles & Tutorials</h1>
             <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-4">
                 {blogs.length > 0 ? (
           blogs.map((blog:Blog) => (

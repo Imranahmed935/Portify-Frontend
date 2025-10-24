@@ -26,9 +26,9 @@ const ProjectModal = ({ open, setOpen, project }: any) => {
     thumbnail: "",
     githubLink: "",
     liveLink: "",
-    tags: "", // keep as string for input
+    tags: "",
   });
-
+  console.log(formData);
   useEffect(() => {
     if (project) {
       setFormData({
@@ -36,13 +36,15 @@ const ProjectModal = ({ open, setOpen, project }: any) => {
         content: project.content || "",
         thumbnail: project.thumbnail || "",
         githubLink: project.githubLink || "",
-        liveLink: project.liveLink || "",
-        tags: Array.isArray(project.tags) ? project.tags.join(", ") : "", // join array → string
+        liveLink: project.liveLink ?? "",
+        tags: Array.isArray(project.tags) ? project.tags.join(", ") : "",
       });
     }
   }, [project]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
@@ -50,10 +52,12 @@ const ProjectModal = ({ open, setOpen, project }: any) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
- 
     const updatedData = {
       ...formData,
-      tags: formData.tags.split(",").map((tag) => tag.trim()).filter(Boolean),
+      tags: formData.tags
+        .split(",")
+        .map((tag) => tag.trim())
+        .filter(Boolean),
     };
 
     await handleUpdate(project.id, token!, updatedData);

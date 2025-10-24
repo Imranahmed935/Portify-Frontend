@@ -20,7 +20,7 @@ const BlogCard = ({ blog }: { blog: Blog }) => {
   } = blog;
 
   return (
-    <div className="border rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden bg-[#18181b] text-white">
+    <div className=" rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden text-white">
 
       <div className="h-48 w-full overflow-hidden">
         <img
