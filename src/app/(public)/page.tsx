@@ -1,4 +1,5 @@
 import { HeroSection } from "@/components/modules/home/HeroSection";
+import Skills from "@/components/modules/home/Skills";
 
 export default function Home() {
   return (
@@ -20,6 +21,7 @@ export default function Home() {
         imageSrc="/portify-image.png"
         imageAlt="Full Stack Developer Illustration"
       />
+      <Skills/>
     </div>
   );
 }

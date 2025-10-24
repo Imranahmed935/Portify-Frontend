@@ -84,7 +84,7 @@ const HeroSection = ({
 
      
           {about && (
-            <div className="mx-auto w-full max-w-6xl rounded-2xl bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900 text-white shadow-xl flex flex-col md:flex-row items-center gap-10 ">
+            <div className="mx-auto w-full max-w-6xl rounded-2xl bg-gradient-to-br from-zinc-900 via-zinc-800 to-zinc-900 text-white shadow-xl flex flex-col md:flex-row items-center  ">
     
               {imageSrc && (
                 <img
