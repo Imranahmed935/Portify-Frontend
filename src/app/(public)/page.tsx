@@ -13,11 +13,11 @@ export default function Home() {
         button={{
           text: "Download Resume",
           icon: undefined,
-          url: "/resume.pdf",
+          url: "/full-stack-developer- imran ahmed (1).pdf",
         }}
         button1={{
           text: "Contact",
-          url: "#contact",
+          url: "#Contact-Section",
         }}
         title="About Me"
         about="A dedicated Full Stack Developer with a focus on building responsive, interactive, and user-centric web interfaces. My expertise spans across React, TailwindCSS, JavaScript, Express, MongoDB, Mongoose, and various modern web technologies. Outside of work, I’m a coffee enthusiast with a deep passion for movies, reading, and continuously expanding my skill set. I’m always eager to connect and collaborate on innovative projects. Let’s build something exceptional together."

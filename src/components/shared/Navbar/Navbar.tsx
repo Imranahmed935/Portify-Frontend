@@ -28,7 +28,7 @@ const Navbar = () => {
           variant="destructive"
           className="w-full justify-start gap-2 cursor-pointer"
           onClick={() => {
-            signOut()
+            signOut({ callbackUrl: "/" })
           }}
         >
           Logout
@@ -38,9 +38,7 @@ const Navbar = () => {
             </Link>
           </Button>
          }
-        
-          
-          
+
 
           <div className="md:hidden">
             <NavigationSheet />

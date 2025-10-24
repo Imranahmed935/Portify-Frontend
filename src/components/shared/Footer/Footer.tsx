@@ -1,53 +1,69 @@
 import Link from "next/link";
+import { Linkedin, Github } from "lucide-react";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="relative w-full overflow-hidden pt-12 pb-10 ">
+    <footer className="relative w-full overflow-hidden pt-16 pb-10 bg-gray-900">
       {/* Background Layer */}
       <div
         className="absolute inset-0 z-0"
         style={{
           background:
-            "radial-gradient(125% 125% at 50% 60%, #000000 40%, #010133 100%)",
+            "radial-gradient(125% 125% at 50% 60%, #0f0f0f 40%, #1a1a2e 100%)",
         }}
       />
 
       {/* Content Layer */}
       <div className="relative z-10 container mx-auto px-6 sm:px-8 md:px-12 lg:px-20 xl:px-28 text-white">
-        <div className="flex flex-col md:flex-row justify-between items-center gap-6 text-center md:text-left">
-          {/* Left */}
+        <div className="flex flex-col md:flex-row justify-between items-center gap-8 text-center md:text-left">
+          {/* Left - Brand */}
           <div>
-            <h2 className="text-white text-xl font-semibold mb-1">
-              Next level™
-            </h2>
-            <p className="text-sm text-gray-400">Smart blog System</p>
+            <h2 className="text-white text-2xl font-bold mb-1">Portify</h2>
+            <p className="text-gray-400 text-sm">Full Stack Developer Portfolio</p>
           </div>
 
-          {/* Center Nav */}
-          <div className="flex flex-wrap justify-center md:justify-start space-x-6 text-sm">
-            <Link href="/" className="hover:text-white transition-colors">
+          {/* Center - Nav Links */}
+          <div className="flex flex-wrap justify-center md:justify-start gap-6 text-sm font-medium">
+            <Link href="/" className="hover:text-blue-500 transition-colors">
               Home
             </Link>
-            <Link href="/events" className="hover:text-white transition-colors">
-              Events
+            <Link href="#Projects" className="hover:text-blue-500 transition-colors">
+              Projects
             </Link>
-            <Link href="/about" className="hover:text-white transition-colors">
-              About
+            <Link href="#BlogSection" className="hover:text-blue-500 transition-colors">
+              Blog
             </Link>
-            <Link
-              href="/contact"
-              className="hover:text-white transition-colors"
-            >
+            <Link href="#Contact-Section" className="hover:text-blue-500 transition-colors">
               Contact
             </Link>
           </div>
 
-          {/* Right */}
-          <div className="text-sm text-gray-400">
-            © {currentYear} next level team. All rights reserved.
+          {/* Right - Socials */}
+          <div className="flex items-center gap-4 mt-4 md:mt-0">
+            <a
+              href="https://linkedin.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-400 hover:text-blue-500 transition-colors"
+            >
+              <Linkedin className="w-5 h-5" />
+            </a>
+            <a
+              href="https://github.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-400 hover:text-blue-500 transition-colors"
+            >
+              <Github className="w-5 h-5" />
+            </a>
           </div>
+        </div>
+
+        {/* Bottom Copyright */}
+        <div className="mt-8 text-center text-gray-500 text-sm">
+          © {currentYear} Portify. All rights reserved.
         </div>
       </div>
     </footer>

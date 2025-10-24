@@ -57,7 +57,7 @@ const SideBar = () => {
             variant="destructive"
             className="w-full justify-start gap-2 cursor-pointer"
             onClick={() => {
-              signOut();
+              signOut({ callbackUrl: "/" });
             }}
           >
             <LogOut className="h-4 w-4" />

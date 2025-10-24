@@ -31,11 +31,11 @@ const HeroSection = ({
   button = {
     text: "Discover Features",
     icon: <Zap className="ml-2 w-4 h-4" />,
-    url: "#",
+    url: "/full-stack-developer-imran-ahmed.pdf",
   },
   button1 = {
     text: "Contact",
-    url: "#contact",
+    url: "#Contact-Section",
   },
   title = "About Me",
 }: Hero115Props) => {
