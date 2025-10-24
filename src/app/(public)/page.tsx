@@ -1,10 +1,25 @@
-
-
+import { HeroSection } from "@/components/modules/home/HeroSection";
 
 export default function Home() {
   return (
     <div>
-     
+      <HeroSection
+        heading="Crafting Seamless Frontend & Powerful Backend Solutions"
+        description="A passionate Full Stack Developer skilled in building modern web applications from front to back, creating seamless user experiences and robust server-side solutions."
+        button={{
+          text: "Download Resume",
+          icon: undefined,
+          url: "/resume.pdf",
+        }}
+        button1={{
+          text: "Contact",
+          url: "#contact",
+        }}
+        title="About Me"
+        about="A dedicated Full Stack Developer with a focus on building responsive, interactive, and user-centric web interfaces. My expertise spans across React, TailwindCSS, JavaScript, Express, MongoDB, Mongoose, and various modern web technologies. Outside of work, I’m a coffee enthusiast with a deep passion for movies, reading, and continuously expanding my skill set. I’m always eager to connect and collaborate on innovative projects. Let’s build something exceptional together."
+        imageSrc="/portify-image.png"
+        imageAlt="Full Stack Developer Illustration"
+      />
     </div>
   );
 }

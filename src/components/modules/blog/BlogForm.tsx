@@ -14,6 +14,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useSession } from "next-auth/react";
+import toast from "react-hot-toast";
 
 const BlogForm = () => {
   const { data: session, status } = useSession();
@@ -57,7 +58,7 @@ const BlogForm = () => {
       return;
     }
 
-    alert("✅ Blog created successfully!");
+    toast.success("✅ Blog created successfully!");
   } catch (error) {
     console.error(error);
     alert("Something went wrong");

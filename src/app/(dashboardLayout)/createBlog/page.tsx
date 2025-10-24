@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import BlogForm from "@/components/modules/blog/BlogForm";
 import { Plus, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import AllBlogs from "@/components/modules/blog/AllBlogs";
 
 const CreateBlogPage = () => {
   const [showForm, setShowForm] = useState(false);
@@ -30,6 +31,9 @@ const CreateBlogPage = () => {
           </button>
         </div>
       )}
+      <div>
+        <AllBlogs/>
+      </div>
     </div>
   );
 };

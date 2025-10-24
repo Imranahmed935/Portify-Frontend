@@ -14,10 +14,13 @@ import { Trash, Edit } from "lucide-react";
 import { formatDate, handleDelete, truncateContent } from "@/utils/miniFuntion";
 import { useSession } from "next-auth/react";
 import ProjectModal from "./ProjectModal";
+import toast from "react-hot-toast";
+import Swal from "sweetalert2";
 
 const AllProject = () => {
   const session = useSession();
   const token = session.data?.user.accessToken;
+
   const [projects, setProjects] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedProject, setSelectedProject] = useState<any>(null);
@@ -38,12 +41,36 @@ const AllProject = () => {
     fetchProjects();
   }, []);
 
+
+  const onDeleteProject = async (id: number, token1:string) => {
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    });
+
+    if (result.isConfirmed) {
+      const deleteResult = await handleDelete(id, token1!);
+
+      if (deleteResult.success) {
+        toast.success("Deleted successfully 🗑️");
+        setProjects((prev) => prev.filter((p) => p.id !== id));
+      } else {
+        toast.error(deleteResult.message || "Delete failed ❌");
+      }
+    }
+  };
+
   if (loading) return <p>Loading projects...</p>;
   if (projects.length === 0) return <p>No projects found 😢</p>;
 
   return (
     <div className="py-12 px-4 w-full mx-auto overflow-x-auto">
-      <h1 className="text-2xl font-bold mb-6">Manage Project</h1>
+      <h1 className="text-2xl font-bold mb-6">Manage Projects</h1>
 
       <div className="rounded-xl overflow-hidden shadow-md">
         <Table className="w-full bg-zinc-900 border border-zinc-800">
@@ -103,7 +130,7 @@ const AllProject = () => {
                       variant="destructive"
                       size="sm"
                       className="hover:bg-red-700"
-                      onClick={() => handleDelete(project.id, token!)}
+                      onClick={() => onDeleteProject(project.id, token!)}
                     >
                       <Trash className="w-4 h-4 mr-1" />
                     </Button>

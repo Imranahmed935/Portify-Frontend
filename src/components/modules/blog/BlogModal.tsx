@@ -14,9 +14,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useSession } from "next-auth/react";
-import { handleUpdate } from "@/utils/miniFuntion";
+import { handleBlogUpdate} from "@/utils/miniFuntion";
 
-const ProjectModal = ({ open, setOpen, project }: any) => {
+const BlogModal = ({ open, setOpen, blog }: any) => {
   const session = useSession();
   const token = session.data?.user.accessToken;
 
@@ -24,25 +24,21 @@ const ProjectModal = ({ open, setOpen, project }: any) => {
     title: "",
     content: "",
     thumbnail: "",
-    githubLink: "",
-    liveLink: "",
-    tags: "", // keep as string for input
   });
 
   useEffect(() => {
-    if (project) {
+    if (blog) {
       setFormData({
-        title: project.title || "",
-        content: project.content || "",
-        thumbnail: project.thumbnail || "",
-        githubLink: project.githubLink || "",
-        liveLink: project.liveLink || "",
-        tags: Array.isArray(project.tags) ? project.tags.join(", ") : "", // join array → string
+        title: blog.title || "",
+        content: blog.content || "",
+        thumbnail: blog.thumbnail || "",
       });
     }
-  }, [project]);
+  }, [blog]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
@@ -50,13 +46,7 @@ const ProjectModal = ({ open, setOpen, project }: any) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
- 
-    const updatedData = {
-      ...formData,
-      tags: formData.tags.split(",").map((tag) => tag.trim()).filter(Boolean),
-    };
-
-    await handleUpdate(project.id, token!, updatedData);
+    await handleBlogUpdate(blog.id, token!, formData);
     setOpen(false);
   };
 
@@ -64,9 +54,9 @@ const ProjectModal = ({ open, setOpen, project }: any) => {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="lg:max-w-3xl">
         <DialogHeader>
-          <DialogTitle>Update Project</DialogTitle>
+          <DialogTitle>Update Blog</DialogTitle>
           <DialogDescription>
-            Modify the project details below and click update.
+            Modify the blog details below and click update.
           </DialogDescription>
         </DialogHeader>
 
@@ -77,7 +67,7 @@ const ProjectModal = ({ open, setOpen, project }: any) => {
               name="title"
               value={formData.title}
               onChange={handleChange}
-              placeholder="Enter project title"
+              placeholder="Enter blog title"
             />
           </div>
 
@@ -87,7 +77,7 @@ const ProjectModal = ({ open, setOpen, project }: any) => {
               name="content"
               value={formData.content}
               onChange={handleChange}
-              placeholder="Enter project description"
+              placeholder="Enter blog content"
             />
           </div>
 
@@ -101,39 +91,9 @@ const ProjectModal = ({ open, setOpen, project }: any) => {
             />
           </div>
 
-          <div>
-            <label className="text-sm font-medium">GitHub Link</label>
-            <Input
-              name="githubLink"
-              value={formData.githubLink}
-              onChange={handleChange}
-              placeholder="Enter GitHub link"
-            />
-          </div>
-
-          <div>
-            <label className="text-sm font-medium">Live Link</label>
-            <Input
-              name="liveLink"
-              value={formData.liveLink}
-              onChange={handleChange}
-              placeholder="Enter live site link"
-            />
-          </div>
-
-          <div>
-            <label className="text-sm font-medium">Languages / Tags</label>
-            <Input
-              name="tags"
-              value={formData.tags}
-              onChange={handleChange}
-              placeholder="Comma separated (e.g. React, Node, MongoDB)"
-            />
-          </div>
-
           <DialogFooter>
             <Button type="submit" className="w-full">
-              Update Project
+              Update Blog
             </Button>
           </DialogFooter>
         </form>
@@ -142,4 +102,4 @@ const ProjectModal = ({ open, setOpen, project }: any) => {
   );
 };
 
-export default ProjectModal;
+export default BlogModal;

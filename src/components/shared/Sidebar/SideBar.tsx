@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Home, FolderPlus, FilePlus, LogOut } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
+import { BarChart2 } from "lucide-react";
 
 const SideBar = () => {
   const session = useSession();
@@ -25,6 +26,13 @@ const SideBar = () => {
           </Link>
 
           <Link
+            href="/dashboard"
+            className="flex items-center space-x-3 hover:bg-slate-700 p-2 rounded-md transition"
+          >
+            <BarChart2 className="w-5 h-5 text-white" />
+            <span>Stats</span>
+          </Link>
+          <Link
             href="/createProject"
             className="flex items-center space-x-3 hover:bg-slate-700 p-2 rounded-md transition"
           >
@@ -44,18 +52,18 @@ const SideBar = () => {
 
       {/* Bottom Logout Button */}
       <div className="p-4 border-t border-gray-500">
-        {
-          session.status === "authenticated" && <Button
-          variant="destructive"
-          className="w-full justify-start gap-2 cursor-pointer"
-          onClick={() => {
-            signOut()
-          }}
-        >
-          <LogOut className="h-4 w-4" />
-          Logout
-        </Button>
-        }
+        {session.status === "authenticated" && (
+          <Button
+            variant="destructive"
+            className="w-full justify-start gap-2 cursor-pointer"
+            onClick={() => {
+              signOut();
+            }}
+          >
+            <LogOut className="h-4 w-4" />
+            Logout
+          </Button>
+        )}
       </div>
     </div>
   );

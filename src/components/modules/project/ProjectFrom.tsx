@@ -13,6 +13,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { useSession } from "next-auth/react";
+import toast from "react-hot-toast";
 
 const ProjectForm = () => {
   const { data: session, status } = useSession();
@@ -23,13 +24,15 @@ const ProjectForm = () => {
       content: "",
       thumbnail: "",
       githubLink: "",
-      LiveLink: "",
+      liveLink: "",
+      tags:""
+    
     },
   });
 
   const onSubmit = async (values: FieldValues) => {
     if (status !== "authenticated") {
-      alert("You must be logged in to create a blog");
+      toast.error("You must be logged in to create a blog");
       return;
     }
 
@@ -71,7 +74,7 @@ const ProjectForm = () => {
 
       const data = await res.json();
       console.log("✅ Project created:", data);
-      alert("Project created successfully!");
+      toast.success("Project created successfully!");
     } catch (error) {
       console.error("❌ Error creating project:", error);
     }
