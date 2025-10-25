@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Home, FolderPlus, FilePlus, LogOut, BarChart2 } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
+import LogoMark from "../LogoMark";
 
 interface SideBarProps {
   closeSidebar?: () => void; 
@@ -15,9 +16,7 @@ const SideBar: React.FC<SideBarProps> = ({ closeSidebar }) => {
   return (
     <div className="flex flex-col justify-between h-full p-6 text-white">
       <div>
-        <h2 className="lg:text-4xl text-2xl font-bold mb-6 text-blue-500 text-center">
-          Portify
-        </h2>
+        <div className="py-4"><LogoMark/></div>
 
         <nav className="flex flex-col space-y-4">
           {[

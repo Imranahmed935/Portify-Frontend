@@ -46,7 +46,7 @@ const HeroSection = ({
 }: Hero115Props) => {
   return (
     <section className="overflow-hidden sm:pt-32 lg:pt-52 xl:pt-52 px-4 sm:px-6 md:px-8 lg:px-12 xl:px-24">
-      <div className="container mx-auto">
+      <div className="container mx-auto lg:mt-0 mt-32">
         <div className="flex flex-col gap-8 md:gap-10 lg:gap-16">
          
           <div className="relative flex flex-col gap-5 text-center px-2 sm:px-4 md:px-8">

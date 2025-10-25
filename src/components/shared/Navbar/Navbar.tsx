@@ -26,7 +26,7 @@ const Navbar = () => {
         isScrolled ? "bg-black/80 backdrop-blur-lg shadow-md" : "bg-transparent"
       }`}
     >
-      <div className="max-w-screen-xl mx-auto flex h-16 items-center justify-between px-4 sm:px-6 md:px-8 lg:px-10">
+      <div className="max-w-screen-xl mx-auto flex h-16 items-center justify-between px-4 sm:px-6 md:px-8 lg:px-10 py-10">
         <Link href="/" className="flex-shrink-0">
           <LogoMark />
         </Link>
