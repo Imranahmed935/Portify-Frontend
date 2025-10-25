@@ -35,15 +35,14 @@ export const authOptions: NextAuthOptions = {
           const userData = await res.json();
           const user = userData?.data;
 
-          console.log("✅ Authorized user:", user);
 
           if (user?.id && user?.email) {
             return {
               id: user.id,
               email: user.email,
               role: user.role,
-              accessToken: user.accessToken, // ✅ Correct
-              refreshToken: user.refreshTokenToken, // ✅ Added
+              accessToken: user.accessToken, 
+              refreshToken: user.refreshTokenToken, 
             };
           }
 
@@ -57,7 +56,7 @@ export const authOptions: NextAuthOptions = {
   ],
 
   callbacks: {
-    // 🧠 Save tokens in JWT
+
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
@@ -69,7 +68,7 @@ export const authOptions: NextAuthOptions = {
       return token;
     },
 
-    // 🧠 Expose tokens to frontend session
+
     async session({ session, token }) {
       if (session.user) {
         session.user.id = token.id as number;

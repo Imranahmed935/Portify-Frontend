@@ -1,4 +1,3 @@
-
 import React from "react";
 import { useForm, FieldValues } from "react-hook-form";
 import { Input } from "@/components/ui/input";
@@ -25,8 +24,7 @@ const ProjectForm = () => {
       thumbnail: "",
       githubLink: "",
       liveLink: "",
-      tags:""
-    
+      tags: "",
     },
   });
 
@@ -36,7 +34,7 @@ const ProjectForm = () => {
       return;
     }
 
-    const { title, content, thumbnail, githubLink, LiveLink } = values;
+    const { title, content, thumbnail, githubLink, liveLink } = values;
     const token = session?.user?.accessToken;
 
     const projectInfo = {
@@ -60,20 +58,18 @@ const ProjectForm = () => {
           content,
           thumbnail,
           githubLink,
-          LiveLink,
+          liveLink,
           tags: projectInfo.tags,
           authorId: session?.user?.id,
         }),
       });
 
       if (!res.ok) {
-        const error = await res.json();
-        alert(error.message || "Failed to create project");
+        toast.error("Failed to create project");
         return;
       }
 
-      const data = await res.json();
-      console.log("✅ Project created:", data);
+      await res.json();
       toast.success("Project created successfully!");
     } catch (error) {
       console.error("❌ Error creating project:", error);
@@ -94,6 +90,13 @@ const ProjectForm = () => {
             <FormField
               control={form.control}
               name="title"
+              rules={{
+                required: "Title is required",
+                minLength: {
+                  value: 3,
+                  message: "Title must be at least 3 characters long",
+                },
+              }}
               render={({ field }) => (
                 <FormItem className="w-full">
                   <FormLabel>Title</FormLabel>
@@ -113,6 +116,13 @@ const ProjectForm = () => {
             <FormField
               control={form.control}
               name="content"
+              rules={{
+                required: "Content is required",
+                minLength: {
+                  value: 10,
+                  message: "Content must be at least 10 characters long",
+                },
+              }}
               render={({ field }) => (
                 <FormItem className="w-full">
                   <FormLabel>Content</FormLabel>
@@ -132,6 +142,13 @@ const ProjectForm = () => {
             <FormField
               control={form.control}
               name="thumbnail"
+              rules={{
+                required: "Thumbnail URL is required",
+                pattern: {
+                  value: /^https?:\/\/.+\.(jpg|jpeg|png|gif|webp)$/i,
+                  message: "Enter a valid image URL",
+                },
+              }}
               render={({ field }) => (
                 <FormItem className="w-full">
                   <FormLabel>Thumbnail URL</FormLabel>
@@ -146,15 +163,24 @@ const ProjectForm = () => {
                 </FormItem>
               )}
             />
+
+            {/* Github Link */}
             <FormField
               control={form.control}
               name="githubLink"
+              rules={{
+                required: "GitHub link is required",
+                pattern: {
+                  value: /^https?:\/\/(www\.)?github\.com\/.+$/i,
+                  message: "Enter a valid GitHub URL",
+                },
+              }}
               render={({ field }) => (
                 <FormItem className="w-full">
-                  <FormLabel>GithubLink URL</FormLabel>
+                  <FormLabel>GitHub Link URL</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Enter githubLink URL"
+                      placeholder="Enter GitHub link"
                       className="w-full border-[#dbdbdb] bg-transparent text-white"
                       {...field}
                     />
@@ -163,15 +189,24 @@ const ProjectForm = () => {
                 </FormItem>
               )}
             />
+
+            {/* Live Link */}
             <FormField
               control={form.control}
               name="liveLink"
+              rules={{
+                required: "Live link is required",
+                pattern: {
+                  value: /^https?:\/\/.+$/i,
+                  message: "Enter a valid live site URL",
+                },
+              }}
               render={({ field }) => (
                 <FormItem className="w-full">
-                  <FormLabel>LiveLink URL</FormLabel>
+                  <FormLabel>Live Link URL</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Enter liveLink URL"
+                      placeholder="Enter live site URL"
                       className="w-full border-[#dbdbdb] bg-transparent text-white"
                       {...field}
                     />
@@ -180,15 +215,20 @@ const ProjectForm = () => {
                 </FormItem>
               )}
             />
+
+            {/* Tags */}
             <FormField
               control={form.control}
               name="tags"
+              rules={{
+                required: "At least one tag is required",
+              }}
               render={({ field }) => (
                 <FormItem className="w-full">
                   <FormLabel>Language</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Enter Language with comma(,)"
+                      placeholder="Enter languages separated by commas (e.g. React, Node.js)"
                       className="w-full border-[#dbdbdb] bg-transparent text-white"
                       {...field}
                     />
