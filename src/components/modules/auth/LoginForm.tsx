@@ -24,10 +24,10 @@ export default function LoginForm() {
 
   const onSubmit = async (values: FieldValues) => {
     try {
-       signIn("credentials",{
+      await signIn("credentials", {
         ...values,
-        callbackUrl:"/dashboard"
-      })
+        callbackUrl: "/dashboard",
+      });
     } catch (error) {
       console.error("Login Error:", error);
       alert("Something went wrong! Please try again.");
@@ -47,6 +47,13 @@ export default function LoginForm() {
             <FormField
               control={form.control}
               name="email"
+              rules={{
+                required: "Email is required",
+                pattern: {
+                  value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                  message: "Enter a valid email address",
+                },
+              }}
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Email</FormLabel>
@@ -67,6 +74,13 @@ export default function LoginForm() {
             <FormField
               control={form.control}
               name="password"
+              rules={{
+                required: "Password is required",
+                minLength: {
+                  value: 6,
+                  message: "Password must be at least 6 characters",
+                },
+              }}
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Password</FormLabel>

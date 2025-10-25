@@ -8,6 +8,9 @@ export default function Home() {
   return (
     <div>
       <HeroSection
+        icon={<span className="text-3xl animate-wave">👋</span>}
+  heading1="Hi there!"
+  description1="I’m Imran, a full stack developer."
         heading="Crafting Seamless Frontend & Powerful Backend Solutions"
         description="A passionate Full Stack Developer skilled in building modern web applications from front to back, creating seamless user experiences and robust server-side solutions."
         button={{
