@@ -27,45 +27,40 @@ const BlogForm = () => {
     },
   });
 
- const onSubmit = async (values: FieldValues) => {
-  
-  if (status !== "authenticated") {
-    alert("You must be logged in to create a blog");
-    return;
-  }
-
-  const { title, content, thumbnail } = values;
-  const token = session?.user?.accessToken;
-
-  try {
-    const res = await fetch("http://localhost:5000/api/v1/blog/create", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        title,
-        content,
-        thumbnail,
-        authorId: session?.user?.id,
-      }),
-    });
-
-    if (!res.ok) {
-      const error = await res.json();
-      alert(error.message || "Failed to create blog");
+  const onSubmit = async (values: FieldValues) => {
+    if (status !== "authenticated") {
+      toast.error("You must be logged in to create a blog");
       return;
     }
 
-    toast.success("✅ Blog created successfully!");
-  } catch (error) {
-    console.error(error);
-    alert("Something went wrong");
-  }
-};
+    const { title, content, thumbnail } = values;
+    const token = session?.user?.accessToken;
 
+    try {
+      const res = await fetch("http://localhost:5000/api/v1/blog/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          title,
+          content,
+          thumbnail,
+          authorId: session?.user?.id,
+        }),
+      });
 
+      if (!res.ok) {
+        toast.error("Failed to create blog");
+        return;
+      }
+      toast.success("✅ Blog created successfully!");
+    } catch (error) {
+      console.error(error);
+      toast.error("Something went wrong");
+    }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-zinc-950 text-white px-0 py-12">
@@ -78,6 +73,10 @@ const BlogForm = () => {
             <FormField
               control={form.control}
               name="title"
+              rules={{
+                required: "Title is required",
+                minLength: { value: 50, message: "Title must be at least 50 characters" },
+              }}
               render={({ field }) => (
                 <FormItem className="w-full">
                   <FormLabel>Title</FormLabel>
@@ -93,6 +92,10 @@ const BlogForm = () => {
             <FormField
               control={form.control}
               name="content"
+              rules={{
+                required: "Content is required",
+                minLength: { value: 200, message: "Content must be at least 200 characters" },
+              }}
               render={({ field }) => (
                 <FormItem className="w-full">
                   <FormLabel>Content</FormLabel>
@@ -108,6 +111,13 @@ const BlogForm = () => {
             <FormField
               control={form.control}
               name="thumbnail"
+              rules={{
+                required: "Thumbnail URL is required",
+                pattern: {
+                  value: /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp))$/i,
+                  message: "Enter a valid image URL",
+                },
+              }}
               render={({ field }) => (
                 <FormItem className="w-full">
                   <FormLabel>Thumbnail URL</FormLabel>
