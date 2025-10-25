@@ -8,7 +8,6 @@ export const truncateContent = (text: string) => {
     return words.length > 5 ? words.slice(0, 5).join(" ") + "..." : text;
   };
 
-
 export const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString("en-GB", {
       day: "2-digit",
@@ -16,8 +15,6 @@ export const formatDate = (dateString: string) => {
       year: "numeric",
     });
   };
-
-
 
 export const handleDelete = async (id: number, token: string) => {
   try {
@@ -43,7 +40,6 @@ export const handleDelete = async (id: number, token: string) => {
     return { success: false, message: "Something went wrong" };
   }
 };
-
 
 export const handleBlogDelete = async (id: number, token: string) => {
   try {
@@ -114,4 +110,52 @@ export const handleBlogUpdate = async (id: number, token: string, data: any) => 
     console.error("❌ Error updating project:", error);
   }
 };
+
+
+
+export const allBlogs = async () => {
+  try {
+    const res = await fetch(`http://localhost:5000/api/v1/blog`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      cache: "no-store", 
+    });
+
+    if (!res.ok) {
+      throw new Error("Failed to fetch blogs");
+    }
+
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching blogs:", error);
+    return { error: error };
+  }
+};
+
+
+export const allProjects = async () => {
+  try {
+    const res = await fetch(`http://localhost:5000/api/v1/project`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      cache: "no-store",
+    });
+
+    if (!res.ok) {
+      throw new Error("Failed to fetch projects");
+    }
+
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching projects:", error);
+    return { error: error };
+  }
+};
+
 

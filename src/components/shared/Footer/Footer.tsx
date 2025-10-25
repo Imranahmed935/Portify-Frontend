@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Linkedin, Github } from "lucide-react";
+import LogoMark from "../LogoMark";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -15,16 +16,16 @@ export default function Footer() {
         }}
       />
 
-      {/* Content Layer */}
+     
       <div className="relative z-10 container mx-auto px-6 sm:px-8 md:px-12 lg:px-20 xl:px-28 text-white">
         <div className="flex flex-col md:flex-row justify-between items-center gap-8 text-center md:text-left">
-          {/* Left - Brand */}
+      
           <div>
-            <h2 className="text-white text-2xl font-bold mb-1">Portify</h2>
+            <LogoMark/>
             <p className="text-gray-400 text-sm">Full Stack Developer Portfolio</p>
           </div>
 
-          {/* Center - Nav Links */}
+      
           <div className="flex flex-wrap justify-center md:justify-start gap-6 text-sm font-medium">
             <Link href="/" className="hover:text-blue-500 transition-colors">
               Home
@@ -40,7 +41,7 @@ export default function Footer() {
             </Link>
           </div>
 
-          {/* Right - Socials */}
+        
           <div className="flex items-center gap-4 mt-4 md:mt-0">
             <a
               href="https://linkedin.com"

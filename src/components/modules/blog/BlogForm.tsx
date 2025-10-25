@@ -15,8 +15,13 @@ import {
 } from "@/components/ui/form";
 import { useSession } from "next-auth/react";
 import toast from "react-hot-toast";
+import { X } from "lucide-react";
 
-const BlogForm = () => {
+interface BlogFormProps {
+  onClose: () => void;
+}
+
+const BlogForm: React.FC<BlogFormProps> = ({ onClose }) => {
   const { data: session, status } = useSession();
 
   const form = useForm<FieldValues>({
@@ -55,7 +60,9 @@ const BlogForm = () => {
         toast.error("Failed to create blog");
         return;
       }
+
       toast.success("✅ Blog created successfully!");
+      onClose(); // close form on success
     } catch (error) {
       console.error(error);
       toast.error("Something went wrong");
@@ -63,9 +70,19 @@ const BlogForm = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-zinc-950 text-white px-0 py-12">
-      <div className="w-full max-w-3xl bg-zinc-900 p-10 rounded-xl shadow-lg space-y-8">
-        <h2 className="text-4xl font-semibold text-left">Create Blog</h2>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+      <div className="relative w-full max-w-3xl bg-zinc-900 p-6 sm:p-10 rounded-xl shadow-lg overflow-y-auto max-h-full">
+        {/* ❎ Cross icon for closing the form */}
+        <button
+          className="absolute top-4 right-4 text-white hover:text-red-500 transition"
+          onClick={onClose}
+        >
+          <X size={24} />
+        </button>
+
+        <h2 className="text-3xl sm:text-4xl font-semibold text-left mb-6">
+          Create Blog
+        </h2>
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 w-full">
@@ -75,10 +92,10 @@ const BlogForm = () => {
               name="title"
               rules={{
                 required: "Title is required",
-                minLength: { value: 50, message: "Title must be at least 50 characters" },
+                minLength: { value: 10, message: "Title must be at least 10 characters" },
               }}
               render={({ field }) => (
-                <FormItem className="w-full">
+                <FormItem>
                   <FormLabel>Title</FormLabel>
                   <FormControl>
                     <Input placeholder="Enter blog title" {...field} />
@@ -94,10 +111,10 @@ const BlogForm = () => {
               name="content"
               rules={{
                 required: "Content is required",
-                minLength: { value: 200, message: "Content must be at least 200 characters" },
+                minLength: { value: 50, message: "Content must be at least 50 characters" },
               }}
               render={({ field }) => (
-                <FormItem className="w-full">
+                <FormItem>
                   <FormLabel>Content</FormLabel>
                   <FormControl>
                     <Textarea placeholder="Write your blog content..." {...field} />
@@ -119,7 +136,7 @@ const BlogForm = () => {
                 },
               }}
               render={({ field }) => (
-                <FormItem className="w-full">
+                <FormItem>
                   <FormLabel>Thumbnail URL</FormLabel>
                   <FormControl>
                     <Input placeholder="Enter image URL" {...field} />

@@ -10,7 +10,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
-import { Trash, Edit } from "lucide-react";
+import { Trash, Edit, Loader } from "lucide-react";
 import { formatDate, handleDelete, truncateContent } from "@/utils/miniFuntion";
 import { useSession } from "next-auth/react";
 import ProjectModal from "./ProjectModal";
@@ -41,8 +41,7 @@ const AllProject = () => {
     fetchProjects();
   }, []);
 
-
-  const onDeleteProject = async (id: number, token1:string) => {
+  const onDeleteProject = async (id: number, token1: string) => {
     const result = await Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -65,23 +64,31 @@ const AllProject = () => {
     }
   };
 
-  if (loading) return <p>Loading projects...</p>;
-  if (projects.length === 0) return <p>No projects found 😢</p>;
+  if (loading) {
+    return <div className="flex items-center justify-center gap-2 p-4 lg:py-52 py-44">
+      <Loader className="h-8 w-8 animate-spin text-white" />
+      <span className="text-xl font-medium text-white">Loading...</span>
+    </div>
+  }
+  if (projects.length === 0)
+    return <p className="text-center py-10">No projects found 😢</p>;
 
   return (
-    <div className="py-12 px-4 w-full mx-auto overflow-x-auto">
-      <h1 className="text-2xl font-bold mb-6">Manage Projects</h1>
+    <div className="py-8 px-4 md:px-6 lg:px-8 w-full mx-auto">
+      <h1 className="text-2xl sm:text-3xl font-bold mb-6 text-center sm:text-left">
+        Manage Projects
+      </h1>
 
-      <div className="rounded-xl overflow-hidden shadow-md">
-        <Table className="w-full bg-zinc-900 border border-zinc-800">
+      <div className="overflow-x-auto rounded-xl shadow-md">
+        <Table className="w-full min-w-[600px] sm:min-w-full bg-zinc-900 border border-zinc-800">
           <TableHeader>
             <TableRow className="bg-zinc-800">
-              <TableHead className="text-white px-4 py-2">#</TableHead>
-              <TableHead className="text-white px-4 py-2">Thumbnail</TableHead>
-              <TableHead className="text-white px-4 py-2">Title</TableHead>
-              <TableHead className="text-white px-4 py-2">Content</TableHead>
-              <TableHead className="text-white px-4 py-2">Created At</TableHead>
-              <TableHead className="text-white px-4 py-2 text-right">
+              <TableHead className="text-white px-3 py-2 text-sm sm:text-base">#</TableHead>
+              <TableHead className="text-white px-3 py-2 text-sm sm:text-base">Thumbnail</TableHead>
+              <TableHead className="text-white px-3 py-2 text-sm sm:text-base">Title</TableHead>
+              <TableHead className="text-white px-3 py-2 text-sm sm:text-base">Content</TableHead>
+              <TableHead className="text-white px-3 py-2 text-sm sm:text-base">Created At</TableHead>
+              <TableHead className="text-white px-3 py-2 text-sm sm:text-base text-right">
                 Actions
               </TableHead>
             </TableRow>
@@ -93,27 +100,27 @@ const AllProject = () => {
                 key={project.id}
                 className="hover:bg-zinc-700 transition-colors"
               >
-                <TableCell className="text-gray-300 px-4 py-2">
+                <TableCell className="text-gray-300 px-3 py-2 text-sm sm:text-base">
                   {index + 1}
                 </TableCell>
-                <TableCell className="px-4 py-2">
+                <TableCell className="px-3 py-2">
                   <img
                     src={project.thumbnail}
                     alt={project.title}
-                    className="w-10 h-10 rounded-md object-cover"
+                    className="w-10 h-10 sm:w-12 sm:h-12 rounded-md object-cover"
                   />
                 </TableCell>
-                <TableCell className="font-medium text-white px-4 py-2">
+                <TableCell className="font-medium text-white px-3 py-2 text-sm sm:text-base">
                   {project.title}
                 </TableCell>
-                <TableCell className="text-gray-300 px-4 py-2">
+                <TableCell className="text-gray-300 px-3 py-2 text-sm sm:text-base">
                   {truncateContent(project.content)}
                 </TableCell>
-                <TableCell className="text-gray-400 px-4 py-2">
+                <TableCell className="text-gray-400 px-3 py-2 text-sm sm:text-base">
                   {formatDate(project.createdAt)}
                 </TableCell>
-                <TableCell className="px-4 py-2">
-                  <div className="flex justify-end gap-2 h-full">
+                <TableCell className="px-3 py-2">
+                  <div className="flex justify-end gap-2 h-full flex-wrap sm:flex-nowrap">
                     <Button
                       onClick={() => {
                         setSelectedProject(project);
@@ -123,7 +130,8 @@ const AllProject = () => {
                       size="sm"
                       className="text-white border-gray-600 hover:bg-zinc-700"
                     >
-                      <Edit className="w-4 h-4 mr-1" />
+                      <Edit className="w-4 h-4 sm:mr-1" />
+                      <span className="hidden sm:inline">Edit</span>
                     </Button>
 
                     <Button
@@ -132,7 +140,8 @@ const AllProject = () => {
                       className="hover:bg-red-700"
                       onClick={() => onDeleteProject(project.id, token!)}
                     >
-                      <Trash className="w-4 h-4 mr-1" />
+                      <Trash className="w-4 h-4 sm:mr-1" />
+                      <span className="hidden sm:inline">Delete</span>
                     </Button>
                   </div>
                 </TableCell>
@@ -142,12 +151,8 @@ const AllProject = () => {
         </Table>
       </div>
 
-      {/* ✅ Modal Render */}
-      <ProjectModal
-        open={open}
-        setOpen={setOpen}
-        project={selectedProject}
-      />
+      {/* Modal */}
+      <ProjectModal open={open} setOpen={setOpen} project={selectedProject} />
     </div>
   );
 };

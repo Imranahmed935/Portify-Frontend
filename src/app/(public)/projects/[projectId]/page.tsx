@@ -3,8 +3,19 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Github, ExternalLink } from "lucide-react";
 import Link from "next/link";
+import { Project } from "@/types/project";
 
-const ProjectDetailsPage = async ({
+
+export const generateStaticParams = async () => {
+  const res = await fetch(`http://localhost:5000/api/v1/project`);
+  const { data: projects } = await res.json();
+
+  return projects.map((project:Project) => ({
+    projectId: String(project.id),
+  }));
+};
+
+export const generateMetadata = async ({
   params,
 }: {
   params: { projectId: string };
@@ -14,6 +25,27 @@ const ProjectDetailsPage = async ({
   const res = await fetch(`http://localhost:5000/api/v1/project/${projectId}`, {
     cache: "no-store",
   });
+
+  if (!res.ok) {
+    return { title: "Blog Not Found" };
+  }
+
+  const projectData = await res.json();
+  const details: Project = projectData.data;
+
+  return {
+    title: details?.title || "Project Details",
+  };
+};
+
+const ProjectDetailsPage = async ({
+  params,
+}: {
+  params: { projectId: string };
+}) => {
+  const { projectId } = params;
+
+  const res = await fetch(`http://localhost:5000/api/v1/project/${projectId}`);
 
   if (!res.ok) {
     return (
