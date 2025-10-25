@@ -32,8 +32,8 @@ export const NavMenu = (props: NavigationMenuProps) => {
           </NavigationMenuLink>
         </NavigationMenuItem>
 
-        {/* Show dashboard only for admin */}
-        {session?.user?.role === "Super_Admin" && (
+       
+        {session?.user?.role === "SUPER_ADMIN" && (
           <NavigationMenuItem>
             <NavigationMenuLink asChild>
               <Link href="/dashboard">Dashboard</Link>
