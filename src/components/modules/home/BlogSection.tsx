@@ -5,7 +5,7 @@ import { Blog } from "@/types/project";
 
 const BlogSection = async () => {
 
-  const res = await fetch(`http://localhost:5000/api/v1/blog`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/blog`, {
     next: { revalidate: 30 }, 
   });
 

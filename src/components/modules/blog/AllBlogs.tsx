@@ -29,7 +29,7 @@ const AllBlogs = () => {
 
   const fetchBlogs = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/v1/blog");
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/blog`);
       const data = await res.json();
       setBlogs(data?.data || []);
     } catch (err) {

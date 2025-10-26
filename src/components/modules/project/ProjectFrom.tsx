@@ -54,7 +54,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ onClose }) => {
     };
 
     try {
-      const res = await fetch("http://localhost:5000/api/v1/project/create", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/project/create`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

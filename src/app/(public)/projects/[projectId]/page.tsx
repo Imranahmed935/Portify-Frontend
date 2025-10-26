@@ -7,7 +7,7 @@ import { Project } from "@/types/project";
 
 
 export const generateStaticParams = async () => {
-  const res = await fetch(`http://localhost:5000/api/v1/project`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/project`);
   const { data: projects } = await res.json();
 
   return projects.map((project:Project) => ({

@@ -10,7 +10,7 @@ interface Blog {
 }
 
 export const generateStaticParams = async () => {
-  const res = await fetch(`http://localhost:5000/api/v1/blog`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/blog`);
   const { data: blogs } = await res.json();
 
   return blogs.map((blog: Blog) => ({
@@ -25,7 +25,7 @@ export const generateMetadata = async ({
 }) => {
   const { blogId } = params;
 
-  const res = await fetch(`http://localhost:5000/api/v1/blog/${blogId}`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/blog/${blogId}`, {
     cache: "no-store",
   });
 
@@ -45,7 +45,7 @@ export const generateMetadata = async ({
 const BlogDetailsPage = async ({ params }: { params: { blogId: string } }) => {
   const { blogId } = params;
 
-  const res = await fetch(`http://localhost:5000/api/v1/blog/${blogId}`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/blog/${blogId}`);
   if (!res.ok) {
     return (
       <p className="text-center text-red-500 mt-10">Post not found</p>

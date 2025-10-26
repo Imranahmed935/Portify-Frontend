@@ -18,7 +18,7 @@ export const formatDate = (dateString: string) => {
 
 export const handleDelete = async (id: number, token: string) => {
   try {
-    const res = await fetch(`http://localhost:5000/api/v1/project/${id}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/project/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -43,7 +43,7 @@ export const handleDelete = async (id: number, token: string) => {
 
 export const handleBlogDelete = async (id: number, token: string) => {
   try {
-    const res = await fetch(`http://localhost:5000/api/v1/blog/${id}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/blog/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -67,7 +67,7 @@ export const handleBlogDelete = async (id: number, token: string) => {
 
 export const handleUpdate = async (id: number, token: string, data: any) => {
   try {
-    const res = await fetch(`http://localhost:5000/api/v1/project/${id}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/project/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -90,7 +90,7 @@ export const handleUpdate = async (id: number, token: string, data: any) => {
 
 export const handleBlogUpdate = async (id: number, token: string, data: any) => {
   try {
-    const res = await fetch(`http://localhost:5000/api/v1/blog/${id}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/blog/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -112,10 +112,9 @@ export const handleBlogUpdate = async (id: number, token: string, data: any) => 
 };
 
 
-
 export const allBlogs = async () => {
   try {
-    const res = await fetch(`http://localhost:5000/api/v1/blog`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/blog`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -138,7 +137,7 @@ export const allBlogs = async () => {
 
 export const allProjects = async () => {
   try {
-    const res = await fetch(`http://localhost:5000/api/v1/project`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/project`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

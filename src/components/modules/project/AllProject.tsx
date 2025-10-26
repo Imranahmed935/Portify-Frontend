@@ -29,7 +29,7 @@ const AllProject = () => {
   useEffect(() => {
     const fetchProjects = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/v1/project");
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/project`);
         const data = await res.json();
         setProjects(data?.data || []);
       } catch (err) {

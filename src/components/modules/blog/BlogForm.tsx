@@ -42,7 +42,7 @@ const BlogForm: React.FC<BlogFormProps> = ({ onClose }) => {
     const token = session?.user?.accessToken;
 
     try {
-      const res = await fetch("http://localhost:5000/api/v1/blog/create", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/blog/create`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

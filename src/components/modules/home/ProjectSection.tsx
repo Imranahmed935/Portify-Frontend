@@ -5,7 +5,7 @@ import { Project } from "@/types/project";
 
 const ProjectSection = async () => {
   // Server-side fetch with ISR: revalidate every 60 seconds
-  const res = await fetch(`http://localhost:5000/api/v1/project`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/project`, {
     next: { revalidate: 30 }, 
   });
 
